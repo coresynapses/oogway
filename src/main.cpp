@@ -2,44 +2,45 @@
 #include <memory>
 
 #include <QtUiTools>
-
 #include <QApplication>
 #include <QLabel>
 #include <QSpinBox>
 #include <QVBoxLayout>
-
 #include <QFile>
 
-// static QWidget* loadCalculatorForm(QWidget* parent = nullptr) {
-//   QtUiLoader loader;
+static QWidget* loadCalculatorForm(QWidget* parent = nullptr) {
 
-//   QFile file(u":/forms/calculatorform.ui"_s);
+  QUiLoader loader;
 
-//   if(!file.open(QFile::ReadOnly))
-//     return nullptr;
+  QFile file("forms/calculatorform.ui");
 
-//   QWidget *formWidget = loader.load(&file, parent);
+  if(!file.open(QFile::ReadOnly)) {
+    std::cout << "File for UI not found.\n";
+    return nullptr;
+  }
 
-//   file.close();
+  QWidget *formWidget = loader.load(&file, parent);
 
-//   if(!formWidget)
-//     return nullptr;
+  file.close();
 
-//   auto *inputSpinBox1 = formWidget->findChild<QSpinBox*>(u"inputSpinBox1"_s);
-//   auto *inputSpinBox2 = formWidget->findChild<QSpinBox*>(u"inputSpinBox2"_s);
-//   auto *outputWidget = formWidget->findChild<QLabel*>(u"oututWidget"_s);
+  if(!formWidget)
+    return nullptr;
+
+  auto *inputSpinBox1 = formWidget->findChild<QSpinBox*>("inputSpinBox1");
+  auto *inputSpinBox2 = formWidget->findChild<QSpinBox*>("inputSpinBox2");
+  auto *outputWidget = formWidget->findChild<QLabel*>("outputWidget");
 
 
-//   auto updateResult = [inputSpinBox1, inputSpinBox2, outputWidget]() {
-//     const int sum = inputSpinBox1->value() + inputSpinBox2->value();
-//     outputWidget->SetText(QString::number(sum));
-//   };
+  auto updateResult = [inputSpinBox1, inputSpinBox2, outputWidget]() {
+    const int sum = inputSpinBox1->value() + inputSpinBox2->value();
+    outputWidget->setText(QString::number(sum));
+  };
 
-//   QObject::connect(inputSpinBox1, &QSpinBox::valueChanged, formWidget, updateResult);
-//   QObject::connect(inputSpinBox2, &QSpinBox::valueChanged, formWidget, updateResult);
+  QObject::connect(inputSpinBox1, &QSpinBox::valueChanged, formWidget, updateResult);
+  QObject::connect(inputSpinBox2, &QSpinBox::valueChanged, formWidget, updateResult);
 
-//   return formWidget;
-// }
+  return formWidget;
+}
   
 
 using namespace std;
@@ -47,7 +48,22 @@ using namespace std;
 int main(int argc, char** argv) {
   cout << "Oogway\n";
   
+  // QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
+  // QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+  QApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
   QApplication app(argc, argv);
+  QWidget w;
 
-  return 0;
+  auto* formWidget = loadCalculatorForm(&w);
+
+  if(!formWidget)
+    return -1;
+
+  auto* layout = new QVBoxLayout(&w);
+  layout->addWidget(formWidget);
+
+  w.setWindowTitle(QCoreApplication::translate("Oogway", "Oogway"));
+  w.show();
+
+  return app.exec();
 }
