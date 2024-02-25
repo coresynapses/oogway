@@ -8,6 +8,8 @@
 #include <QVBoxLayout>
 #include <QFile>
 
+using namespace std;
+
 static QWidget* loadCalculatorForm(QWidget* parent = nullptr) {
 
   QUiLoader loader;
@@ -41,9 +43,6 @@ static QWidget* loadCalculatorForm(QWidget* parent = nullptr) {
 
   return formWidget;
 }
-  
-
-using namespace std;
 
 int main(int argc, char** argv) {
   cout << "Oogway\n";
@@ -67,3 +66,4 @@ int main(int argc, char** argv) {
 
   return app.exec();
 }
+
