@@ -8,13 +8,20 @@
 #include <QVBoxLayout>
 #include <QFile>
 
+#include <QGuiApplication>
+#include <QQmlEngine>
+#include <QQmlApplicationEngine>
+#include <QQmlFileSelector>
+#include <QQuickView>
+#include <QQuickStyle>
+
 using namespace std;
 
 static QWidget* loadCalculatorForm(QWidget* parent = nullptr) {
 
   QUiLoader loader;
 
-  QFile file("forms/calculatorform.ui");
+  QFile file("../forms/calculatorform.ui");
 
   if(!file.open(QFile::ReadOnly)) {
     std::cout << "File for UI not found.\n";
@@ -47,23 +54,51 @@ static QWidget* loadCalculatorForm(QWidget* parent = nullptr) {
 int main(int argc, char** argv) {
   cout << "Oogway\n";
   
-  // QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
-  // QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   QApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
-  QApplication app(argc, argv);
-  QWidget w;
+  QCoreApplication::setOrganizationName("Core Synapses");
+  QCoreApplication::setApplicationName("Oogway");
 
-  auto* formWidget = loadCalculatorForm(&w);
+  // NOTE: This code loads a .ui file and renders it
+  // QApplication app(argc, argv);
 
-  if(!formWidget)
+  // QWidget w;
+  // auto* formWidget = loadCalculatorForm(&w);
+
+  // if(!formWidget)
+  //   return -1;
+
+  // auto* layout = new QVBoxLayout(&w);
+  // layout->addWidget(formWidget);
+
+  // w.setWindowTitle(QCoreApplication::translate("Oogway", "Oogway"));
+  // w.show();
+
+
+  // This code loads .qml file and renders it
+  QGuiApplication app(argc, argv);
+
+  QQuickStyle::setStyle("Basic");
+
+  // NOTE: QQuickView does not support using a window as a root item.
+  //       Need to use QQmlApplicationEngine.
+  // QQuickView view;
+  // view.connect(view.engine(), &QQmlEngine::quit, &app, &QCoreApplication::quit);
+  // view.setSource(QUrl("../main.qml"));
+  // if(view.status() == QQuickView::Error) {
+  //   cout << view.status() << ": Error\n";
+  //   return -1;
+  // }
+  // view.setResizeMode(QQuickView::SizeRootObjectToView);
+  // view.show();
+
+  QQmlApplicationEngine eng;
+  eng.load(QUrl("../main.qml"));
+
+  if(eng.rootObjects().isEmpty()) {
+    // cout << view.status() << ": Error\n";
     return -1;
+  }
 
-  auto* layout = new QVBoxLayout(&w);
-  layout->addWidget(formWidget);
-
-  w.setWindowTitle(QCoreApplication::translate("Oogway", "Oogway"));
-  w.show();
 
   return app.exec();
 }
-
