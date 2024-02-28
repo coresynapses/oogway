@@ -17,6 +17,17 @@
 
 using namespace std;
 
+class OogwayControl : public QObject {
+  QOBJECT
+  QML_ELEMENT
+  QML_SINGLETON
+
+  public:
+  Q_INVOKABLE void writeToFile() {
+    cout << "clicked" << endl;
+  }
+};
+
 static QWidget* loadCalculatorForm(QWidget* parent = nullptr) {
 
   QUiLoader loader;
