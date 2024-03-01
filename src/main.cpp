@@ -1,6 +1,8 @@
+#include <bits/stdc++.h>
 #include <iostream>
 #include <memory>
 
+#include <QObject>
 #include <QtUiTools>
 #include <QApplication>
 #include <QLabel>
@@ -15,18 +17,22 @@
 #include <QQuickView>
 #include <QQuickStyle>
 
+#include <sodium.h>
+
+#include <sqlite3.h>
+
 using namespace std;
 
-class OogwayControl : public QObject {
-  QOBJECT
-  QML_ELEMENT
-  QML_SINGLETON
+// class OogwayControl : public QObject {
+//   Q_OBJECT
+//   QML_ELEMENT
+//   QML_SINGLETON
 
-  public:
-  Q_INVOKABLE void writeToFile() {
-    cout << "clicked" << endl;
-  }
-};
+//   public:
+//   Q_INVOKABLE void writeToFile() {
+//     cout << "clicked" << endl;
+//   }
+// };
 
 static QWidget* loadCalculatorForm(QWidget* parent = nullptr) {
 
@@ -64,6 +70,20 @@ static QWidget* loadCalculatorForm(QWidget* parent = nullptr) {
 
 int main(int argc, char** argv) {
   cout << "Oogway\n";
+
+  sqlite3* db;
+  int rc = sqlite3_open("oogway.db", &db);
+  if (rc)
+    cout << "Can't open database: " << sqlite3_errmsg(db) << endl;
+  else
+    cout << "Databased opened\n";
+  sqlite3_close(db);
+
+  if(sodium_init() == -1) {
+    cout << "Sodium initialization failed\n";
+  } else {
+    cout << "Sodium initialization succeeded\n";
+  }
   
   QApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
   QCoreApplication::setOrganizationName("Core Synapses");
@@ -105,10 +125,8 @@ int main(int argc, char** argv) {
   QQmlApplicationEngine eng;
   eng.load(QUrl("../main.qml"));
 
-  if(eng.rootObjects().isEmpty()) {
-    // cout << view.status() << ": Error\n";
+  if(eng.rootObjects().isEmpty())
     return -1;
-  }
 
 
   return app.exec();

@@ -13,13 +13,20 @@ ApplicationWindow {
     ColumnLayout {
 	id: layout
 	anchors.fill: parent
-	spacing: 10
+	spacing: 200
 
+	Label {
+	    id: login_header
+	    text: "Oogway Log-In"
+	    Layout.margins: 50
+	    Layout.fillWidth: true
+	}
 	
 	TextInput {
 	    id: username
 	    text: "Username"
-	    visible: true
+	    Layout.margins: 50
+	    Layout.fillWidth: true
 	    
 	    width: 400
 	    height: 50
@@ -49,19 +56,21 @@ ApplicationWindow {
 
 	RowLayout {
 	    id: control_buttons
-	    spacing: 20
+	    spacing: 200
 
 
 	    Button {
 		id: submit
 		text: "Submit"
 		visible: true
+		Layout.margins: 50
+		Layout.fillWidth: true
 		
 		background: Rectangle {
 		    implicitWidth: 100
 		    implicitHeight: 40
-		    color: button.down ? "#000000" : "#ffffff"
-		    border.color: "#26282a"
+		    color: submit.down ? "#ff0000" : "#00ffff"
+		    border.color: "#00ffff"
 		    border.width: 1
 		    radius: 4
 		}
@@ -70,12 +79,14 @@ ApplicationWindow {
 		id: cancel
 		text: "Cancel"
 		visible: true
+		Layout.margins: 50
+		Layout.fillWidth: true
 		
 		background: Rectangle {
 		    implicitWidth: 100
 		    implicitHeight: 40
-		    color: button.down ? "#000000" : "#ffffff"
-		    border.color: "#26282a"
+		    color: cancel.down ? "#00ff00" : "#ff00ff"
+		    border.color: "#ffff00"
 		    border.width: 1
 		    radius: 4
 		}
