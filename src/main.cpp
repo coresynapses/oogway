@@ -1,6 +1,4 @@
 #include <bits/stdc++.h>
-#include <iostream>
-#include <memory>
 
 #include <QObject>
 #include <QtUiTools>
@@ -18,8 +16,11 @@
 #include <QQuickStyle>
 
 #include <sodium.h>
-
 #include <sqlite3.h>
+#include <cryptopp/rsa.h>
+
+#include <boost/asio.hpp>
+#include <boost/beast.hpp>
 
 using namespace std;
 
@@ -84,6 +85,9 @@ int main(int argc, char** argv) {
   } else {
     cout << "Sodium initialization succeeded\n";
   }
+
+  boost::asio::io_context io;
+  boost::beast::tcp_stream stream(io);
   
   QApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
   QCoreApplication::setOrganizationName("Core Synapses");

@@ -16,27 +16,36 @@ find_package(Qt6 6.6 REQUIRED COMPONENTS
   QuickControls2
 )
 
-find_package(PkgConfig REQUIRED)
-pkg_check_modules(sodium_PKG REQUIRED libsodium)
-message("Found libsodium: ${sodium_PKG_FOUND}")
-message("Found libsodium: ${sodium_PKG_INCLUDE_DIRS}")
-message("Found libsodium: ${sodium_PKG_LIBRARY_DIRS}")
-message("Found libsodium: ${sodium_PKG_LIBRARIES}")
+find_package(Boost REQUIRED COMPONENTS
+  system
+)
 
+find_package(PkgConfig REQUIRED)
+
+pkg_check_modules(sodium_PKG REQUIRED libsodium)
 pkg_check_modules(sqlite3_PKG REQUIRED sqlite3)
-message("Found libsodium: ${sqlite3_PKG_FOUND}")
-message("Found libsodium: ${sqlite3_PKG_INCLUDE_DIRS}")
-message("Found libsodium: ${sqlite3_PKG_LIBRARY_DIRS}")
-message("Found libsodium: ${sqlite3_PKG_LIBRARIES}")
+pkg_check_modules(libcryptopp_PKG REQUIRED libcryptopp)
+pkg_check_modules(_PKG REQUIRED libcryptopp)
+
+# message("Found libsodium: ${sodium_PKG_FOUND}")
+# message("Found libsodium: ${sodium_PKG_INCLUDE_DIRS}")
+# message("Found libsodium: ${sodium_PKG_LIBRARY_DIRS}")
+# message("Found libsodium: ${sodium_PKG_LIBRARIES}")
+
+# message("Found libsodium: ${sqlite3_PKG_FOUND}")
+# message("Found libsodium: ${sqlite3_PKG_INCLUDE_DIRS}")
+# message("Found libsodium: ${sqlite3_PKG_LIBRARY_DIRS}")
+# message("Found libsodium: ${sqlite3_PKG_LIBRARIES}")
 
 include_directories(${SODIUM_INCLUDE_DIR})
 include_directories(${sqlite3_INCLUDE_DIR})
+include_directories(${libcryptopp_PKG_INCLUDE_DIR})
+include_directories(${Boost_INCLUDE_DIRS})
 
 qt_standard_project_setup(REQUIRES 6.6)
 
 qt_add_executable(oogway
   src/main.cpp
-  forms/calculatorform.ui
 )
 
 qt_add_qml_module(Oogway
@@ -44,13 +53,6 @@ qt_add_qml_module(Oogway
   VERSION 0.1
   QML_FILES "main.qml"
 )
-
-# qt_add_resources(Oogway  "configuration"
-#   PREFIX "/"
-#   FILES qtquickcontrols2.conf
-# )
-
-#include(qmlmodules.cmake)
 
 target_link_libraries(oogway PRIVATE
   Qt6::Core
@@ -63,6 +65,8 @@ target_link_libraries(oogway PRIVATE
   Qt6::QuickControls2
   ${sodium_PKG_LIBRARIES}
   ${sqlite3_PKG_LIBRARIES}
+  ${libcryptopp_PKG_LIBRARIES}
+  ${Boost_LIBRARIES}
 )
 
 install(TARGETS oogway
