@@ -22,6 +22,8 @@
 #include <boost/asio.hpp>
 #include <boost/beast.hpp>
 
+#include "db.hpp"
+
 using namespace std;
 
 // class OogwayControl : public QObject {
@@ -72,13 +74,9 @@ static QWidget* loadCalculatorForm(QWidget* parent = nullptr) {
 int main(int argc, char** argv) {
   cout << "Oogway\n";
 
-  sqlite3* db;
-  int rc = sqlite3_open("oogway.db", &db);
-  if (rc)
-    cout << "Can't open database: " << sqlite3_errmsg(db) << endl;
-  else
-    cout << "Databased opened\n";
-  sqlite3_close(db);
+  Db db("oogway.db");
+
+  // db.CheckLogin("doctor-who", "time-machine", 128957);
 
   if(sodium_init() == -1) {
     cout << "Sodium initialization failed\n";

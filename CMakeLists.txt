@@ -25,17 +25,6 @@ find_package(PkgConfig REQUIRED)
 pkg_check_modules(sodium_PKG REQUIRED libsodium)
 pkg_check_modules(sqlite3_PKG REQUIRED sqlite3)
 pkg_check_modules(libcryptopp_PKG REQUIRED libcryptopp)
-pkg_check_modules(_PKG REQUIRED libcryptopp)
-
-# message("Found libsodium: ${sodium_PKG_FOUND}")
-# message("Found libsodium: ${sodium_PKG_INCLUDE_DIRS}")
-# message("Found libsodium: ${sodium_PKG_LIBRARY_DIRS}")
-# message("Found libsodium: ${sodium_PKG_LIBRARIES}")
-
-# message("Found libsodium: ${sqlite3_PKG_FOUND}")
-# message("Found libsodium: ${sqlite3_PKG_INCLUDE_DIRS}")
-# message("Found libsodium: ${sqlite3_PKG_LIBRARY_DIRS}")
-# message("Found libsodium: ${sqlite3_PKG_LIBRARIES}")
 
 include_directories(${SODIUM_INCLUDE_DIR})
 include_directories(${sqlite3_INCLUDE_DIR})
@@ -46,13 +35,27 @@ qt_standard_project_setup(REQUIRES 6.6)
 
 qt_add_executable(oogway
   src/main.cpp
+  src/db.hpp
+  src/db.cpp
 )
 
 qt_add_qml_module(Oogway
   URI oogway
   VERSION 0.1
   QML_FILES "main.qml"
+  DEPENDENCIES QtQuick
 )
+
+# qt_add_qml_module(database
+#   URI Db
+#   VERSION 0.1
+#   SOURCES
+#       src/db.cpp
+#       src/db.hpp
+#   QML_FILES
+#       "db.qml"
+#   DEPENDENCIES QtQuick
+# )
 
 target_link_libraries(oogway PRIVATE
   Qt6::Core
