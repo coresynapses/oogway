@@ -3,6 +3,7 @@ project(Oogway LANGUAGES CXX)
 
 set(BUILD_DIR "build/")
 set(CMAKE_AUTOMOC_ON)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt6 6.6 REQUIRED COMPONENTS
   Core
@@ -33,15 +34,15 @@ include_directories(${Boost_INCLUDE_DIRS})
 
 qt_standard_project_setup(REQUIRES 6.6)
 
+add_subdirectory(Login)
+
 qt_add_executable(oogway
   src/main.cpp
-  src/db.hpp
-  src/db.cpp
 )
 
 qt_add_qml_module(Oogway
   URI oogway
-  VERSION 0.1
+  VERSION 1.0
   QML_FILES "main.qml"
   DEPENDENCIES QtQuick
 )
@@ -70,6 +71,7 @@ target_link_libraries(oogway PRIVATE
   ${sqlite3_PKG_LIBRARIES}
   ${libcryptopp_PKG_LIBRARIES}
   ${Boost_LIBRARIES}
+  Login
 )
 
 install(TARGETS oogway

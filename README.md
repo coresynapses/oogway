@@ -80,32 +80,43 @@ architecture diagrams.
 
 ## User Interface Design
 
-Presents the design of the user interface, including wireframes, mockups, or prototypes to visualize the layout, navigation, and interactions.
+Presents the design of the user interface, including wireframes,
+mockups, or prototypes to visualize the layout, navigation, and
+interactions.
 
 ## Data Model
 
-Describes the structure and relationships of the data used by the system, including databases, tables, entities, attributes, and any data flows or transformations.
+Describes the structure and relationships of the data used by the
+system, including databases, tables, entities, attributes, and any
+data flows or transformations.
 
 ## Algorithms and Logic
 
-Details the algorithms, calculations, or business logic used within the system to achieve its functionality.
+Details the algorithms, calculations, or business logic used within
+the system to achieve its functionality.
 
 ## Technical Stack
 
-Lists the technologies, frameworks, libraries, and tools chosen for development, along with any rationale for their selection.
+Lists the technologies, frameworks, libraries, and tools chosen for
+development, along with any rationale for their selection.
 
 ## Testing Strategy
 
-Outlines the approach to testing, including types of testing (e.g., unit testing, integration testing, user acceptance testing), testing tools, and criteria for success.
+Outlines the approach to testing, including types of testing (e.g.,
+unit testing, integration testing, user acceptance testing), testing
+tools, and criteria for success.
 
 ## Deployment Plan
 
-Specifies how the project will be deployed, including infrastructure requirements, deployment environments, deployment process, and any dependencies.
+Specifies how the project will be deployed, including infrastructure
+requirements, deployment environments, deployment process, and any
+dependencies.
 
 
 ## Risk Assessment
 
-Identifies potential risks to the project's success and outlines strategies to mitigate or manage them.
+Identifies potential risks to the project's success and outlines
+strategies to mitigate or manage them.
 
 
 ## Timeline and Milestones
